@@ -21,6 +21,7 @@ public class Board extends JPanel
     private final int TIME_STEP = 25;
 
     private Player player;
+    private Platform[] platforms;
     private Buttons buttons;
     private Timer timer;
 
@@ -37,7 +38,10 @@ public class Board extends JPanel
         
         buttons = new Buttons(this);
 
-        player = new Player(this, WIDTH/2, HEIGHT/2);
+        player = new Player(this, 600, 500);
+        platforms = new Platform[2];
+        platforms[0] = new Platform(450, 540, 300, 20);
+        platforms[1] = new Platform(150, 740, 400, 20);
         
         timer = new Timer(TIME_STEP, this);
         timer.start();
@@ -52,6 +56,9 @@ public class Board extends JPanel
         super.paintComponent(g);
 
         player.draw(g);
+        for(Platform p: platforms) {
+        	p.draw(g);
+        }
     }
 
     @Override
