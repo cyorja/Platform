@@ -21,7 +21,7 @@ public class Player {
     	buttons = board.getButtons();
     	x = startX;
     	y = startY;
-        ImageIcon ii = new ImageIcon("star.png");
+        ImageIcon ii = new ImageIcon("images/star.png");
         myImage = ii.getImage();
     }
     
