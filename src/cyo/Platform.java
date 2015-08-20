@@ -28,5 +28,17 @@ public class Platform {
         Toolkit.getDefaultToolkit().sync();
     }
     
+    /**
+     * Determine if this platform touches the given area
+     * @param left the x-coordinate of the left side of the area
+     * @param right the x-coordinate of the right side of the area
+     * @param top the y-coordinate of the top of the area
+     * @param bottom the y-coordinate of the bottom of the area
+     * @return true if it touches, false if it does not.
+     */
+    public boolean touches(double left, double right, double top, double bottom) {
+    	return (x <= right) && (x+width >= left) && (y <= bottom) && (y+height >= top);
+    }
+    
 
 }

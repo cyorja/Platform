@@ -66,4 +66,29 @@ public class Board extends JPanel
     	player.update(TIME_STEP);
         repaint();
     }
+    
+    /**
+     * Determine if any platform on the board touch the given area
+     * @param left the x-coordinate of the left side of the area
+     * @param right the x-coordinate of the right side of the area
+     * @param top the y-coordinate of the top of the area
+     * @param bottom the y-coordinate of the bottom of the area
+     * @return the first platform it finds that is in that area or null if no platforms
+     * are in that area.
+     */
+    public Platform platformInArea(double left, double right, double top, double bottom) {
+    	Platform found = null;
+    	
+    	// Loop through all the platforms and see if any are in the specified area.
+    	// Stop after finding the first one.
+    	for(int ctr=0; ctr<platforms.length; ++ ctr) {
+    		Platform next = platforms[ctr];
+    		if (next.touches(left, right, top, bottom)) {
+    			found = next;
+    			break;
+    		}
+    	}
+    	return found;
+    }
+    
 }
