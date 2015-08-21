@@ -10,6 +10,8 @@ public class Player {
 
 	private double x;
 	private double y;
+	private int ht = 40;
+	private int wt = 40;
 	private Image myImage;
 	private Image stillImage;
 	private Image[] rt;
@@ -44,7 +46,14 @@ public class Player {
 	}
 
 
+	/**
+	 * Look at what's around us and what keys are being pressed and change
+	 * our location and image accordingly.
+	 * @param timeSinceLast time since we last updated the player
+	 */
 	public void update(int timeSinceLast) {
+	
+		// Move the player right if right is being pressed
 		if (buttons.rightPressed()) {
 			x += RATE * timeSinceLast;
 
@@ -58,6 +67,8 @@ public class Player {
 			myImage = rt [imageIWant - 1];
 			lastTime = imageIWant;
 		}
+		
+		//Move the player left if left is being pressed
 		if (buttons.leftPressed()) {
 			x -= RATE * timeSinceLast;
 			if (x < 0) {
@@ -69,7 +80,11 @@ public class Player {
 			}
 			myImage = lt [imageIWant - 1];
 			lastTime = imageIWant;
+			
 		}    	
+		if (board.platformInArea(x, x + wt, y + ht, y + ht + 1) == null) {
+			y += RATE * timeSinceLast;
+		}
 	}
 
 	public void draw(Graphics g) {
