@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 
 public class Player {
 
+	private final int JUMP_SECONDS = 100;
 	private double x;
 	private double y;
 	private int ht = 40;
@@ -20,6 +21,7 @@ public class Player {
 	private Buttons buttons;
 	private final double RATE = 0.08; // Pixels/ms
 	private int lastTime;
+	private int jumpTime = 0;
 
 	public Player(Board inBoard, int startX, int startY) {
 		board = inBoard;
@@ -52,7 +54,7 @@ public class Player {
 	 * @param timeSinceLast time since we last updated the player
 	 */
 	public void update(int timeSinceLast) {
-	
+
 		// Move the player right if right is being pressed
 		if (buttons.rightPressed()) {
 			x += RATE * timeSinceLast;
@@ -67,7 +69,7 @@ public class Player {
 			myImage = rt [imageIWant - 1];
 			lastTime = imageIWant;
 		}
-		
+
 		//Move the player left if left is being pressed
 		if (buttons.leftPressed()) {
 			x -= RATE * timeSinceLast;
@@ -80,12 +82,32 @@ public class Player {
 			}
 			myImage = lt [imageIWant - 1];
 			lastTime = imageIWant;
-			
-		}    	
+		}    
+		
 		if (board.platformInArea(x, x + wt, y + ht, y + ht + 1) == null) {
+			 if ((jumpTime == 0) || (jumpTime == JUMP_SECONDS)) {
 			y += RATE * timeSinceLast;
 		}
+		} else {
+			jumpTime = 0;
+		}
+		
+		//Jump if space bar is being pressed
+		if (jumpTime < JUMP_SECONDS) {
+			if (buttons.upPressed()) {
+				if (jumpTime == 0) {
+					jumpTime++;
+				}
+			}
+			if (jumpTime > 0) {
+				y -= RATE * timeSinceLast;
+				jumpTime++;
+			}
+
+		}
+
 	}
+
 
 	public void draw(Graphics g) {
 
