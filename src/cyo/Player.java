@@ -6,18 +6,12 @@ import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
 
-public class Player {
+public class Player extends GameObject {
 
 	private final int JUMP_SECONDS = 100;
-	private double x;
-	private double y;
-	private int ht = 40;
-	private int wt = 40;
-	private Image myImage;
 	private Image stillImage;
 	private Image[] rt;
 	private Image[] lt;
-	private Board board;
 	private Buttons buttons;
 	private final double RATE = 0.08; // Pixels/ms
 	private int lastTime;
@@ -105,14 +99,11 @@ public class Player {
 			}
 
 		}
-
-	}
-
-
-	public void draw(Graphics g) {
-
-		g.drawImage(myImage, (int)x, (int)y, board);
-		Toolkit.getDefaultToolkit().sync();
+		
+		if (buttons.leftPressed() == false && buttons.rightPressed() == false && buttons.upPressed() == false) {
+			myImage = stillImage;
+		}
+		
 	}
 
 }

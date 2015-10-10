@@ -20,7 +20,7 @@ public class Board extends JPanel
     
     private final int TIME_STEP = 25;
 
-    private Player player;
+    private GameObject[] avatars;
     private Platform[] platforms;
     private Buttons buttons;
     private Timer timer;
@@ -32,13 +32,17 @@ public class Board extends JPanel
 
     private void initBoard() {
 
+    	avatars = new GameObject[2];
+    
+    	avatars[0] = new Player(this, 600, 500);
+    	avatars[1] = new Alien();
+
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
         setDoubleBuffered(true);
         
         buttons = new Buttons(this);
 
-        player = new Player(this, 600, 500);
         platforms = new Platform[2];
         platforms[0] = new Platform(450, 540, 300, 20);
         platforms[1] = new Platform(150, 740, 400, 20);
@@ -55,7 +59,9 @@ public class Board extends JPanel
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        player.draw(g);
+        for(GameObject a: avatars) {
+        	a.draw(g);
+        }
         for(Platform p: platforms) {
         	p.draw(g);
         }
@@ -63,7 +69,11 @@ public class Board extends JPanel
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    	player.update(TIME_STEP);
+    	
+    	for(int up = 0; up < avatars.length; up++) {
+    		avatars[up].update(TIME_STEP);
+    	}
+    	
         repaint();
     }
     
