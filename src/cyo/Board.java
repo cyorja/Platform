@@ -32,6 +32,8 @@ public class Board extends JPanel
 
     private void initBoard() {
 
+        buttons = new Buttons(this);
+
     	avatars = new GameObject[2];
     
     	avatars[0] = new Player(this, 600, 500);
@@ -39,9 +41,7 @@ public class Board extends JPanel
 
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setDoubleBuffered(true);
-        
-        buttons = new Buttons(this);
+        setDoubleBuffered(true);    
 
         platforms = new Platform[2];
         platforms[0] = new Platform(450, 540, 300, 20);
