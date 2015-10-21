@@ -66,12 +66,22 @@ public class Board extends JPanel
         	p.draw(g);
         }
     }
-
+    
     @Override
     public void actionPerformed(ActionEvent e) {
     	
     	for(int up = 0; up < avatars.length; up++) {
     		avatars[up].update(TIME_STEP);
+    	}
+    	
+    	// Check every pair of objects to see if any overlap.
+    	for(int index1 = 0; index1 < avatars.length; ++index1) {
+    		for(int index2 = index1 +1; index2 < avatars.length; ++index2) {
+    			if (avatars[index1].touches(avatars[index2])) {
+    				avatars[index1].collide(avatars[index2]);
+    				avatars[index2].collide(avatars[index1]);
+    			}
+    		}
     	}
     	
         repaint();
