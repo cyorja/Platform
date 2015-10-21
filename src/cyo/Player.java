@@ -14,8 +14,9 @@ public class Player extends GameObject {
 	private Image[] lt;
 	private Buttons buttons;
 	private final double RATE = 0.08; // Pixels/ms
-	private int lastTime;
 	private int jumpTime = 0;
+	private int counter = 0;
+	private int imageIWant = 0;
 
 	public Player(Board inBoard, int startX, int startY) {
 		board = inBoard;
@@ -56,13 +57,17 @@ public class Player extends GameObject {
 			if (x >= board.getWidth()) {
 				x = x - board.getWidth();	 
 			}
-			int imageIWant = lastTime + 1;
-			if (imageIWant > 3) {
-				imageIWant = 1;
+			
+			counter++;
+			if (counter > 2) {
+				counter = 0;
+				imageIWant++;
 			}
-			myImage = rt [imageIWant - 1];
-			lastTime = imageIWant;
-		}
+			if (imageIWant > rt.length - 1) {
+				imageIWant = 0;
+			}
+			myImage = rt [imageIWant];
+		}    
 
 		//Move the player left if left is being pressed
 		if (buttons.leftPressed()) {
@@ -70,12 +75,16 @@ public class Player extends GameObject {
 			if (x < 0) {
 				x = x + board.getWidth();
 			}
-			int imageIWant = lastTime + 1;
-			if (imageIWant > 3) {
-				imageIWant = 1;
+
+			counter++;
+			if (counter > 2) {
+				counter = 0;
+				imageIWant++;
 			}
-			myImage = lt [imageIWant - 1];
-			lastTime = imageIWant;
+			if (imageIWant > lt.length - 1) {
+				imageIWant = 0;
+			}
+			myImage = lt [imageIWant];
 		}    
 		
 		if (board.platformInArea(x, x + wt, y + ht, y + ht + 1) == null) {

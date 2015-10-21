@@ -37,7 +37,7 @@ public class Board extends JPanel
     	avatars = new GameObject[2];
     
     	avatars[0] = new Player(this, 600, 500);
-    	avatars[1] = new Alien();
+    	avatars[1] = new Alien(this, 500, 700);
 
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
