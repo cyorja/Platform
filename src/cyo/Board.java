@@ -111,4 +111,8 @@ public class Board extends JPanel
     	return found;
     }
     
+  public Player locatePlayer() {
+	  return (Player) avatars[0];
+  }
+    
 }
