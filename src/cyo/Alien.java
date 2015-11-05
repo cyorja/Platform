@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Alien extends GameObject {
-private Image stillImage;
+	private Image stillImage;
 
 	public Alien(Board inBoard, int startX, int startY) {
 		board = inBoard;
@@ -14,13 +14,18 @@ private Image stillImage;
 		x = startX;
 		y = startY;
 		myImage = stillImage;
-	
+
 	}
 	public void update(int timeSenceLast) {
-	
+
 		if (board.locatePlayer().y == this.y) {
 			System.out.println("Shooting missile");
+
+			if (board.locatePlayer().x > this.x) {
+				System.out.println("Right");
+			} else {
+				System.out.println("left");
+			}
 		}
-	
 	}
 }
