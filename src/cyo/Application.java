@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 
 
 public class Application extends JFrame {
-    
+    private final double RATE = 0.20; // Pixels/ms
     public Application() {
 
         initUI();

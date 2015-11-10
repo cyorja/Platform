@@ -18,7 +18,7 @@ public class Player extends GameObject {
 	private int counter = 0;
 	private int imageIWant = 0;
 
-	public Player(Board inBoard, int startX, int startY) {
+	public Player(Board inBoard, double startX, double startY) {
 		board = inBoard;
 		buttons = board.getButtons();
 		x = startX;
@@ -57,7 +57,7 @@ public class Player extends GameObject {
 			if (x >= board.getWidth()) {
 				x = x - board.getWidth();	 
 			}
-			
+		//Right costume change	
 			counter++;
 			if (counter > 2) {
 				counter = 0;
@@ -75,7 +75,7 @@ public class Player extends GameObject {
 			if (x < 0) {
 				x = x + board.getWidth();
 			}
-
+		//Left costume change
 			counter++;
 			if (counter > 2) {
 				counter = 0;

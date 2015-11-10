@@ -51,6 +51,13 @@ public class Board extends JPanel
         timer.start();
     }
     
+    public void addGameObject(GameObject newObj) {
+    	GameObject[] oldAvatars = avatars;
+    	avatars = new GameObject[oldAvatars.length+1];
+    	System.arraycopy(oldAvatars, 0, avatars, 0, oldAvatars.length);
+    	avatars[avatars.length-1] = newObj;
+    }
+    
     public Buttons getButtons() {
     	return buttons;
     }
