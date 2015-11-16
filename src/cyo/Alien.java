@@ -21,11 +21,12 @@ public class Alien extends GameObject {
 		if (board.locatePlayer().y == this.y) {
 			System.out.print("Shooting missile ");
 
-			if (board.locatePlayer().x > this.x) {
+			if (board.locatePlayer().x < this.x) {
 				Missile boom = new Missile(board, this.x, this.y, true);
 				board.addGameObject(boom);
 			} else {
-				System.out.println("left");
+				Missile boom = new Missile(board, this.x, this.y, false);
+				board.addGameObject(boom);
 			}
 		}
 	}
