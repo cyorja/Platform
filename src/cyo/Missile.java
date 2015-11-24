@@ -11,24 +11,32 @@ public class Missile extends GameObject {
 
 	public Missile(Board inBoard, double startX, double startY, boolean moveLeft) {
 		board = inBoard;
-		
-		ImageIcon ii;
 
 		if (moveLeft == false) {
 			direction = "RIGHT";
 		} else {
 			direction = "LEFT";
 		}
+		
+		x = startX;
+		y = startY;
 
 		if (direction == "RIGHT") {
 			ii = new ImageIcon("images/missileRt.png");
+			this.x = startX + 41;
 		} else {
 			ii = new ImageIcon("images/missleLt.png");
+			this.x = startX - 41;
 		}
 
 		myImage = ii .getImage();
-		x = startX;
-		y = startY;
+	}
+	
+	ImageIcon ii;
+
+	public void collide(GameObject other) {
+		ii = new ImageIcon("images/explode.gif");
+		myImage = ii .getImage();
 	}
 
 	public void update(int timeSinceLast) {
@@ -39,8 +47,10 @@ public class Missile extends GameObject {
 		}
 
 		if (this.x == 0 || this.x == board.getWidth()) {
-			System.out.println("missle dead");
+			board.removeGameObject(this);
 		}
+
+
 
 	}
 

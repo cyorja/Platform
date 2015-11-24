@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -20,7 +22,7 @@ public class Board extends JPanel
     
     private final int TIME_STEP = 25;
 
-    private GameObject[] avatars;
+    private ArrayList<GameObject> avatars;
     private Platform[] platforms;
     private Buttons buttons;
     private Timer timer;
@@ -34,10 +36,10 @@ public class Board extends JPanel
 
         buttons = new Buttons(this);
 
-    	avatars = new GameObject[2];
+    	avatars = new ArrayList<GameObject>();
     
-    	avatars[0] = new Player(this, 600, 500);
-    	avatars[1] = new Alien(this, 500, 700);
+    	avatars.add(new Player(this, 600, 500));
+    	avatars.add(new Alien(this, 500, 700));
 
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -52,10 +54,11 @@ public class Board extends JPanel
     }
     
     public void addGameObject(GameObject newObj) {
-    	GameObject[] oldAvatars = avatars;
-    	avatars = new GameObject[oldAvatars.length+1];
-    	System.arraycopy(oldAvatars, 0, avatars, 0, oldAvatars.length);
-    	avatars[avatars.length-1] = newObj;
+    	avatars.add(newObj);
+    }
+    
+    public void removeGameObject(GameObject oldObj) {
+    	avatars.remove(oldObj);
     }
     
     public Buttons getButtons() {
@@ -77,16 +80,16 @@ public class Board extends JPanel
     @Override
     public void actionPerformed(ActionEvent e) {
     	
-    	for(int up = 0; up < avatars.length; up++) {
-    		avatars[up].update(TIME_STEP);
+    	for(int up = 0; up < avatars.size(); up++) {
+    		avatars.get(up).update(TIME_STEP);
     	}
     	
     	// Check every pair of objects to see if any overlap.
-    	for(int index1 = 0; index1 < avatars.length; ++index1) {
-    		for(int index2 = index1 +1; index2 < avatars.length; ++index2) {
-    			if (avatars[index1].touches(avatars[index2])) {
-    				avatars[index1].collide(avatars[index2]);
-    				avatars[index2].collide(avatars[index1]);
+    	for(int index1 = 0; index1 < avatars.size(); ++index1) {
+    		for(int index2 = index1 +1; index2 < avatars.size(); ++index2) {
+    			if (avatars.get(index1).touches(avatars.get(index2))) {
+    				avatars.get(index1).collide(avatars.get(index2));
+    				avatars.get(index2).collide(avatars.get(index1));
     			}
     		}
     	}
@@ -119,7 +122,7 @@ public class Board extends JPanel
     }
     
   public Player locatePlayer() {
-	  return (Player) avatars[0];
+	  return (Player) avatars.get(0);
   }
     
 }
