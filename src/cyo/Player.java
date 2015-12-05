@@ -17,6 +17,19 @@ public class Player extends GameObject {
 	private int jumpTime = 0;
 	private int counter = 0;
 	private int imageIWant = 0;
+	private int knockBackUp = 80;
+	private int knockBackTime = 0;
+	private char knockBackDerection = ' ';
+
+	public void collide(GameObject other) {
+		if (other.x > this.x) {
+			knockBackDerection = 'L';
+		} else {
+			knockBackDerection = 'R';
+		}
+		jumpTime = knockBackUp;
+		knockBackTime = 1;
+	}
 
 	public Player(Board inBoard, double startX, double startY) {
 		board = inBoard;
@@ -51,13 +64,13 @@ public class Player extends GameObject {
 	public void update(int timeSinceLast) {
 
 		// Move the player right if right is being pressed
-		if (buttons.rightPressed()) {
+		if (buttons.rightPressed() && knockBackTime == 0) {
 			x += RATE * timeSinceLast;
 
 			if (x >= board.getWidth()) {
 				x = x - board.getWidth();	 
 			}
-		//Right costume change	
+			//Right costume change	
 			counter++;
 			if (counter > 2) {
 				counter = 0;
@@ -70,12 +83,12 @@ public class Player extends GameObject {
 		}    
 
 		//Move the player left if left is being pressed
-		if (buttons.leftPressed()) {
+		if (buttons.leftPressed() && knockBackTime == 0) {
 			x -= RATE * timeSinceLast;
 			if (x < 0) {
 				x = x + board.getWidth();
 			}
-		//Left costume change
+			//Left costume change
 			counter++;
 			if (counter > 2) {
 				counter = 0;
@@ -86,17 +99,17 @@ public class Player extends GameObject {
 			}
 			myImage = lt [imageIWant];
 		}    
-		
+
 		if (board.platformInArea(x, x + wt, y + ht, y + ht + 1) == null) {
-			 if ((jumpTime == 0) || (jumpTime == JUMP_SECONDS)) {
-			y += RATE * timeSinceLast;
-		}
+			if ((jumpTime == 0) || (jumpTime == JUMP_SECONDS)) {
+				y += RATE * timeSinceLast;
+			}
 		} else {
 			jumpTime = 0;
 		}
-		
-		//Jump if space bar is being pressed
-		if (jumpTime < JUMP_SECONDS) {
+
+		//Jump if up is being pressed
+		if (jumpTime < JUMP_SECONDS ) {
 			if (buttons.upPressed()) {
 				if (jumpTime == 0) {
 					jumpTime++;
@@ -108,11 +121,30 @@ public class Player extends GameObject {
 			}
 
 		}
-		
+
 		if (buttons.leftPressed() == false && buttons.rightPressed() == false && buttons.upPressed() == false) {
 			myImage = stillImage;
 		}
-		
+
+		if (knockBackTime > 0) {
+			if (knockBackDerection == 'L') {
+				x -= RATE * timeSinceLast;
+				if (x < 0) {
+					x = x + board.getWidth();
+				}
+				knockBackTime++;
+			} else {
+				x += RATE * timeSinceLast;
+
+				if (x >= board.getWidth()) {
+					x = x - board.getWidth();		 
+				}
+				knockBackTime++;
+			}
+			if (knockBackTime == 40) {
+				knockBackTime = 0;
+			}
+		}
 	}
 
 }

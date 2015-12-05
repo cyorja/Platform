@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 public class Alien extends GameObject {
 	private Image stillImage;
 	private int launchTime = 0;
-	private int launchNeed = 20; 
+	private int launchNeed = 100; 
 	private boolean stopping = false;
 
 	public Alien(Board inBoard, double startX, double startY) {
@@ -57,6 +57,7 @@ public class Alien extends GameObject {
 		}
 		if (Math.abs(board.locatePlayer().y - this.y) > 4) {
 			stopping = false;
+			launchTime = 0;
 		}
 	}
 }
