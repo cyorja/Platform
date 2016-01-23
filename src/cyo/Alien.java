@@ -40,14 +40,9 @@ public class Alien extends GameObject {
 
 				if (launchTime == launchNeed) {
 					launchTime = 0;
-					if (board.locatePlayer().x < this.x) {
-						Missile boom = new Missile(board, this.x, this.y, true);
-						board.addGameObject(boom);
-					} else {
-						Missile boom = new Missile(board, this.x, this.y, false);
-						board.addGameObject(boom);
-
-					}
+					boolean moveLeft = (board.locatePlayer().x < this.x);
+					Missile boom = new Missile(board, this.x, this.y, moveLeft);
+					board.addGameObject(boom);
 				} else {
 					launchTime++;
 

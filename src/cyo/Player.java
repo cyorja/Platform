@@ -20,6 +20,8 @@ public class Player extends GameObject {
 	private int knockBackUp = 80;
 	private int knockBackTime = 0;
 	private char knockBackDerection = ' ';
+	private int sliceTime = 0;
+	private int sliceNeed = 30;
 
 	public void collide(GameObject other) {
 		if (other.x > this.x) {
@@ -29,6 +31,8 @@ public class Player extends GameObject {
 		}
 		jumpTime = knockBackUp;
 		knockBackTime = 1;
+		System.out.println("player x" + this.x);
+		System.out.println("player y" + this.y);
 	}
 
 	public Player(Board inBoard, double startX, double startY) {
@@ -64,7 +68,7 @@ public class Player extends GameObject {
 	public void update(int timeSinceLast) {
 
 		// Move the player right if right is being pressed
-		if (buttons.rightPressed() && knockBackTime == 0) {
+		if (buttons.rightPressed() && knockBackTime == 0 && sliceTime == 0) {
 			x += RATE * timeSinceLast;
 
 			if (x >= board.getWidth()) {
@@ -83,7 +87,7 @@ public class Player extends GameObject {
 		}    
 
 		//Move the player left if left is being pressed
-		if (buttons.leftPressed() && knockBackTime == 0) {
+		if (buttons.leftPressed() && knockBackTime == 0 && sliceTime == 0) {
 			x -= RATE * timeSinceLast;
 			if (x < 0) {
 				x = x + board.getWidth();
@@ -144,7 +148,23 @@ public class Player extends GameObject {
 			if (knockBackTime == 40) {
 				knockBackTime = 0;
 			}
+		}	
+
+		if (sliceTime > 0) {
+			sliceTime++;
+		}
+		if (sliceTime > sliceNeed) {
+			sliceTime = 0;
+		}
+		if (buttons.attackPressed() && (buttons.rightPressed() || buttons.leftPressed()) && knockBackTime == 0 && sliceTime == 0) {
+
+			boolean cutsRight = buttons.rightPressed();
+			sliceTime++;
+			
+			double bladeX = (cutsRight ? this.x + 5 : this.x -5);
+			
+			BladeArc slice = new BladeArc(board, bladeX, this.y + 2, cutsRight);
+				board.addGameObject(slice);
 		}
 	}
-
 }

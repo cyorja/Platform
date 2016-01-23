@@ -43,6 +43,8 @@ public class Missile extends GameObject {
 			if (om.explodeTime > 0) {
 				passThrough = true;
 			}
+		System.out.println("Missile x" + this.x);
+		System.out.println("Missile y" + this.y);	
 		}
 		if (passThrough == false) {
 			ii = new ImageIcon("images/explode.gif");
@@ -60,7 +62,7 @@ public class Missile extends GameObject {
 			}
 		}
 
-		if (this.x == 0 || this.x == board.getWidth() || explodeTime == explodeNeed) {
+		if (this.x == 0 || this.x == board.getWidth() || explodeTime >= explodeNeed) {
 			board.removeGameObject(this);
 		}
 

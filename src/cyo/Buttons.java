@@ -9,6 +9,7 @@ public class Buttons extends KeyAdapter {
 	boolean left = false;
 	boolean right = false;
 	boolean up = false;
+	boolean attack = false;
 	
 	public Buttons(Component panel) {
         panel.addKeyListener(this);
@@ -28,6 +29,10 @@ public class Buttons extends KeyAdapter {
 		return up;
 	}
 	
+	public boolean attackPressed() {
+		return attack;
+	}
+	
 	
     @Override
     public void keyReleased(KeyEvent e) {
@@ -43,7 +48,10 @@ public class Buttons extends KeyAdapter {
     	 else if (key == KeyEvent.VK_UP) {
     		up = false;
     	 }
-    	
+    	 
+    	 else if (key == KeyEvent.VK_SPACE) {
+    		 attack = false;
+    	 }
     }
 
     @Override
@@ -60,6 +68,10 @@ public class Buttons extends KeyAdapter {
     	else if (key == KeyEvent.VK_UP) {
     		up = true;
     	}
+    	
+    	 else if (key == KeyEvent.VK_SPACE) {
+    		 attack = true ;
+    	 }
     	
     }
 
